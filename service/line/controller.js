@@ -37,7 +37,7 @@ exports.processRequest = (req) => {
     }
     debug('LINE:processRequest:event:');
     event = await createEvent(instance.profile, event);
-    debug(event);
+    info(event);
     info('LINE:processRequest:イベントをルーティング');
     await ROUTER.processEvent(event);
   });
@@ -74,6 +74,7 @@ const createEvent = async (profile, event) => {
   };
 
   if (event.type === 'message') {
+    info(event.message);
     const message = event.message;
     if (message.type === 'text') {
       const data = LINE_POSTBACK_MAP[event.message.text];
@@ -93,7 +94,9 @@ const createEvent = async (profile, event) => {
     } else if (message.type === 'location') {
 
     } else if (message.type === 'sticker') {
-
+      info('スタンプが送信されました');
+      e.message.type = 'text';
+      e.message.text = 'sticker:' + message.stickerId;
     }
   } else if (event.type === 'follow') {
 
