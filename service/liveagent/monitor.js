@@ -108,7 +108,7 @@ const processMessage = (session, message) => {
 const onChatMessage = async(session, message) => {
   info('LIVEAGENT:onChatMessage:オペレーターからメッセージを受信');
   info(message.message.text);
-  let splitedMessages = message.split(':');
+  let splitedMessages = message.message.text.split(':');
   let test = splitedMessages.split(',');
   let packageId = test[0];
   let stickerId = test[1];
