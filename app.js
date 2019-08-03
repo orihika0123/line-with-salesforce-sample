@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+require('dotenv').config();
 
 // Load required custom modules
 const Line = require('./service/line/controller');
