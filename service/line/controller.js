@@ -130,6 +130,9 @@ const sendPushEvent = (body) => {
   return new Promise((resolve, reject) => {
     request.post(options, (error, response, body) => {
       if (error || response.statusCode != 200) {
+        info(error);
+        info(response);
+        info(body);
         reject(body);
       } else {
         resolve(body);
@@ -151,9 +154,6 @@ const getUserProfile = (userId) => {
   return new Promise((resolve, reject) => {
     request.get(options, (error, response, body) => {
       if (error || response.statusCode != 200) {
-        info(error);
-        info(response);
-        info(body);
         reject(body);
       } else {
         resolve(body);
