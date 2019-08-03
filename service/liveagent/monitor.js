@@ -108,7 +108,7 @@ const processMessage = (session, message) => {
 const onChatMessage = async(session, message) => {
   info('LIVEAGENT:onChatMessage:オペレーターからメッセージを受信');
   info(message.message.text);
-  await Router.processEvent(createEvent(session, 'message', {type: 'image',originalContentUrl: 'https://stickershop.line-scdn.net/stickershop/v1/sticker/21836505/iPhone/sticker_key@2x.png', previewImageUrl: 'https://stickershop.line-scdn.net/stickershop/v1/sticker/21836505/iPhone/sticker_key@2x.png'}));
+  // await Router.processEvent(createEvent(session, 'message', {type: 'image',originalContentUrl: 'https://stickershop.line-scdn.net/stickershop/v1/sticker/21836505/iPhone/sticker_key@2x.png', previewImageUrl: 'https://stickershop.line-scdn.net/stickershop/v1/sticker/21836505/iPhone/sticker_key@2x.png'}));
   await Router.processEvent(createEvent(session, 'message', {type: 'sticker',stickerId: '21836505', packageId: '1665104'}));
   await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
 }
