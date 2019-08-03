@@ -108,16 +108,17 @@ const processMessage = (session, message) => {
 const onChatMessage = async(session, message) => {
   info('LIVEAGENT:onChatMessage:オペレーターからメッセージを受信');
   info(message.message.text);
-  let splitedMessages = message.message.text.split(':');
-  let test = splitedMessages[1].split(',');
-  let packageId = test[0];
-  let stickerId = test[1];
-  info(packageId);
-  info(stickerId);
 
-  await Router.processEvent(createEvent(session, 'message', {type: 'sticker',stickerId: stickerId, packageId: packageId}));
-  // await Router.processEvent(createEvent(session, 'message', {type: 'sticker',stickerId: '21836505', packageId: '1665104'}));
-  await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
+  if (message.message.text.startsWith('sticker')) {
+    let splitedMessages = message.message.text.split(':');
+    let ids = splitedMessages[1].split(',');
+    [packageId, stickerId] = ids;
+    info(packageId);
+    info(stickerId);
+    await Router.processEvent(createEvent(session, 'message', {type: 'sticker',stickerId: stickerId, packageId: packageId}));
+  } else {
+    await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
+  }
 }
 const onAgentTyping = async(session) => {}
 const onAgentNotTyping = async(session) => {}
