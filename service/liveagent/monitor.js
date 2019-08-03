@@ -109,7 +109,7 @@ const onChatMessage = async(session, message) => {
   info('LIVEAGENT:onChatMessage:オペレーターからメッセージを受信');
   info(message.message.text);
   await Router.processEvent(createEvent(session, 'message', {type: 'sticker',stickerId: '21836505', packageId: '1665104'}));
-  // await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
+  await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
 }
 const onAgentTyping = async(session) => {}
 const onAgentNotTyping = async(session) => {}
