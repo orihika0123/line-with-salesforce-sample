@@ -172,6 +172,7 @@ const createEvent = (session, type, message) => {
     message: message
   };
   debug(event);
+  info(event);
   return event;
 }
 
