@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
-console.log(process.env.test_key);
+
 // Load required custom modules
 const Line = require('./service/line/controller');
 const db = require('./db/mongodb');
