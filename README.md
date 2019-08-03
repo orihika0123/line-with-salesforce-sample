@@ -23,3 +23,27 @@ git add .
 git commit -m 'edited script'
 git push heroku master
 ```
+
+
+## ローカルで動かす場合
+
+#### パッケージインストール
+```
+npm install
+```
+
+#### envファイルを作成
+それぞれの値を設定する。
+
+#### 起動
+```
+npm start
+```
+
+#### ローカルサーバを外部公開する
+```
+ngrok http 5000
+```
+
+#### line developerコンソール画面で必要な設定
+line channelのwebhook urlに ngrok が定義したurlを設定する
