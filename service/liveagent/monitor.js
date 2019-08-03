@@ -107,6 +107,7 @@ const processMessage = (session, message) => {
 
 const onChatMessage = async(session, message) => {
   info('LIVEAGENT:onChatMessage:オペレーターからメッセージを受信');
+  info(message.message.text);
   await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
 }
 const onAgentTyping = async(session) => {}
