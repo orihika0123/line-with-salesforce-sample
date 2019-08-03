@@ -130,9 +130,6 @@ const sendPushEvent = (body) => {
   return new Promise((resolve, reject) => {
     request.post(options, (error, response, body) => {
       if (error || response.statusCode != 200) {
-        info('error:' + error);
-        info('response:' + response);
-        info('statusCode:' + response.statusCode);
         reject(body);
       } else {
         resolve(body);

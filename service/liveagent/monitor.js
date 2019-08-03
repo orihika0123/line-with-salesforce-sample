@@ -113,8 +113,6 @@ const onChatMessage = async(session, message) => {
     let splitedMessages = message.message.text.split(':');
     let ids = splitedMessages[1].split(',');
     [packageId, stickerId] = ids;
-    info(packageId);
-    info(stickerId);
     await Router.processEvent(createEvent(session, 'message', {type: 'sticker',stickerId: stickerId, packageId: packageId}));
   } else {
     await Router.processEvent(createEvent(session, 'message', {type: 'text',text: message.message.text}));
