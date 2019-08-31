@@ -97,55 +97,35 @@ async function runSample(event) {
   };
 
   const responses = await sessionClient.detectIntent(request);
-
-  console.log('query: ' + query);
-  console.log(responses);
   return responses[0].queryResult.fulfillmentText;
 }
 
 const onText = (instance, event) => {
-  runSample(event).then(result => {
-    console.log('返信:' + result);
-  })
-
-  // var patterns = [{
-  //   key: /こんにちは|ハロー/,
-  //   message: 'こんにちは、' + event.origin.name + 'さん\n何かお困りですか？'
-  // }, {
-  //   key: /Hello|hello/,
-  //   message: 'Hi ' + event.origin.name + ',\nHow can I help you today?'
-  // }, {
-  //   key: /.*パスワード.*/,
-  //   message: 'こちらの情報はお役にたちますか？\nhttps://help.salesforce.com/articleView?id=user_password.htm&language=ja&type=0'
-  // }, {
-  //   key: /./,
-  //   message: ''
-  // }];
-  // var matchedPattern = patterns.filter((pattern) => {
-  //   return pattern.key.test(event.message.text);
-  // });
-  //
-  // if (matchedPattern[0].message) {
-  //   Router.processEvent(createEvent(instance, 'message', {type: 'text', text: matchedPattern[0].message}));
-  // } else {
-  //   const POSTBACK_DATA = require('../../common/constants').POSTBACK_DATA;
-  //   event = createEvent(instance, 'message', {
-  //     type: 'template',
-  //     altText: '今すぐチャットでオペレータに質問してみましょう。',
-  //     template: {
-  //       type: 'buttons',
-  //       thumbnailImageUrl: process.env.BASE_URL + '/asset/img/liveagent_invite.png',
-  //       title: '答えが見つかりませんか？',
-  //       text: '今すぐチャットでオペレータに質問してみましょう。',
-  //       actions: [{
-  //         type: 'postback',
-  //         label: 'チャットを開始',
-  //         data: POSTBACK_DATA.PROCESSOR.ROUTER +','+ POSTBACK_DATA.ACTION.SWITCH_TERMINAL +','+ POSTBACK_DATA.OPTION.LIVEAGENT
-  //       }]
-  //     }
-  //   });
-  //   Router.processEvent(event);
-  // }
+  if (/.*オペレーター.*/.test(event.message.text)) {
+    const POSTBACK_DATA = require('../../common/constants').POSTBACK_DATA;
+    event = createEvent(instance, 'message', {
+      type: 'template',
+      altText: '今すぐチャットでオペレータに質問してみましょう。',
+      template: {
+        type: 'buttons',
+        thumbnailImageUrl: process.env.BASE_URL + '/asset/img/liveagent_invite.png',
+        title: '答えが見つかりませんか？',
+        text: '今すぐチャットでオペレータに質問してみましょう。',
+        actions: [{
+          type: 'postback',
+          label: 'チャットを開始',
+          data: POSTBACK_DATA.PROCESSOR.ROUTER +','+ POSTBACK_DATA.ACTION.SWITCH_TERMINAL +','+ POSTBACK_DATA.OPTION.LIVEAGENT
+        }]
+      }
+    });
+    Router.processEvent(event);
+  } else {
+    // dialogflowのレスポンスを使う
+    runSample(event).then(result => {
+      console.log('返信:' + result);
+      Router.processEvent(createEvent(instance, 'message', {type: 'text', text: result}));
+    });
+  }
 }
 const onImage = (instance, event) => {
   const text = '画像を受け取りました。\n種類は「' + event.content.type + '」、サイズは「' + event.content.length + '」バイトです。\nこちらから確認出来ます。' + event.content.url;
