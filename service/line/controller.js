@@ -37,7 +37,6 @@ exports.processRequest = (req) => {
     }
     debug('LINE:processRequest:event:');
     event = await createEvent(instance.profile, event);
-    info(event);
     info('LINE:processRequest:イベントをルーティング');
     await ROUTER.processEvent(event);
   });
@@ -74,7 +73,6 @@ const createEvent = async (profile, event) => {
   };
 
   if (event.type === 'message') {
-    info(event.message);
     const message = event.message;
     if (message.type === 'text') {
       const data = LINE_POSTBACK_MAP[event.message.text];
