@@ -127,7 +127,11 @@ const onAgentDisconnect = async(session) => {
 }
 const onChasitorSessionData = async(session) => {}
 const onChatEnded = async(session) => {
+  var DB = require('../../db/mongodb');
+  var COLLECTION_NAME = 'RESPONDER';
   info('LIVEAGENT:onChatEnded:オペレータがチャットを終了');
+  info(session);
+  await DB.collection(COLLECTION_NAME).deleteOne({'terminal.id': session.id});
   await Router.processEvent(createEvent(session, 'message', {type: 'text',text: '[自動送信] オペレータがチャットを終了しました。'}));
   endMonitorChatActivity(session);
 }
