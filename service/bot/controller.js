@@ -80,7 +80,7 @@ async function runSample(event) {
 
   let query = event.message.text;
   let sessionID = uuid.v4();
-  let projectId = 'liveengageagent1-gcwevb';
+  let projectId = process.env.PROJECT_ID;
 
   const sessionClient = new dialogflow.SessionsClient();
 
